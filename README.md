@@ -1,2 +1,2 @@
 # Chess
-A backend implementation of chess
+This is an unfinished backend implementation of chess. 
