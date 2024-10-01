@@ -48,17 +48,14 @@ class ChessGUI:
                 piece.move(square)
                 self.update_board()
                 self.selected_piece = None  # Deselect the piece after moving
-                self.reset_highlight()  # Reset highlight after move
             else:
                 print("Illegal move!")
                 self.selected_piece = None  # Reset selection
-                self.reset_highlight()  # Reset highlight
         else:
             # Select the piece, regardless of its color
             piece = self.get_piece_at(square)
             if piece:  # If a piece is present on the selected square
                 self.selected_piece = square
-                self.highlight_square(square)
 
     def get_piece_at(self, square):
         for piece in [self.board.white_queen, self.board.white_king, self.board.white_rook_a,
@@ -76,26 +73,6 @@ class ChessGUI:
             if piece.square == square:
                 return piece
         return None
-
-    def highlight_square(self, square):
-        # Highlight the selected square with red color
-        self.buttons[square].config(bg="red")
-        # Reset the color after a short delay
-        self.master.after(500, lambda: self.reset_square_color(square))
-
-    def reset_square_color(self, square):
-        # Determine the original color of the square
-        row = int(square[1])
-        col = square[0]
-        original_color = "#E5B978" if (row + Board.columns.index(col)) % 2 == 0 else "#D18B34"  # Light and dark brown
-        self.buttons[square].config(bg=original_color)
-
-    def reset_highlight(self):
-        # Reset all squares to their original color
-        for row in Board.rows:
-            for col in Board.columns:
-                square = col + str(row)
-                self.reset_square_color(square)
 
 if __name__ == "__main__":
     root = tk.Tk()
